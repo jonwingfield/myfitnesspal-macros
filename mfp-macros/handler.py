@@ -13,9 +13,11 @@ def handle(event, lambda_context):
     try:
         now_est = datetime.now() - timedelta(hours=5)
         day = client.get_date(now_est)
-        totals = day.totals
 
-        return "{} grams of protein, {} calories".format(totals['protein'], totals['calories'])
+        totals = day.totals
+        goals = day.goals
+
+        return "{} grams of protein, {} calories, {} remaining".format(totals['protein'], totals['calories'], goals['calories'] - totals['calories'])
     except KeyError:
         return "no food logged today yet"
     except Exception as e:
